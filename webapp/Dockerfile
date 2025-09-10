@@ -2,12 +2,20 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-COPY requirements.txt .
-RUN pip install -r requirements.txt
+# Installiere System-Abhängigkeiten
+RUN apt-get update && apt-get install -y \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
 
+# Kopiere Requirements zuerst für besseres Caching
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Kopiere die gesamte App
 COPY . .
 
-RUN mkdir /scripts
-VOLUME ["/scripts"]
+# Exponiere den Port
+EXPOSE 5000
 
-CMD ["python", "app.py"]
+# Startbefehl
+CMD ["flask", "run", "--host=0.0.0.0", "--port=5000"]

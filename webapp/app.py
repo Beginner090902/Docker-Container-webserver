@@ -1,68 +1,65 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, session
 import sys
 import os
 sys.path.append("/scripts")
 import meinskript as skript
-from datetime import datetime
+
 
 app = Flask(__name__)
+app.secret_key = 'dein_geheimer_schluessel'
+
+# Verifizierungs-Funktion
+def verify_password(password):
+    # Hier kannst du deine eigene Verifizierungslogik einbauen
+    # Einfaches Beispiel: Passwort = "admin123"
+    richtiges_password = os.getenv("PASSWORD")
+    if richtiges_password is None:
+        print("Umgebungsvariable PASSWORD ist nicht gesetzt.")
+        return False
+    elif password == richtiges_password:
+        return True
+    return False
 
 
 
-def cleanup_logs(log_file, max_size_kb=10, keep_lines=20):
-
-    if not os.path.exists(log_file):
-        return
-    
-    # Dateigröße in KB berechnen
-    file_size_kb = os.path.getsize(log_file) / 1024
-    
-    if file_size_kb < max_size_kb:
-        return
-    
-    # Log-Einträge lesen
-    with open(log_file, 'r') as file:
-        lines = file.readlines()
-    
-    # Wenn nicht genug Zeilen vorhanden sind, nichts tun
-    if len(lines) <= keep_lines:
-        return
-    
-    # Die letzten 'keep_lines' Zeilen behalten
-    lines_to_keep = lines[-keep_lines:]
-    
-    # Log-Datei mit den behaltenen Zeilen überschreiben
-    with open(log_file, 'w') as file:
-        file.writelines(lines_to_keep)
-    
-    print(f"Log bereinigt: {len(lines) - keep_lines} Einträge gelöscht, {keep_lines} behalten")
 
 
-# Funktion zum Schreiben in Log-Datei
-def write_to_log(message):
-    zeitstempel = datetime.now().strftime("%H:%M:%S %d.%m.%Y")
-    with open("/scripts/output.log", "a") as f:
-        f.write(f"{zeitstempel} - {message}\n")
-    cleanup_logs("/scripts/output.log", max_size_kb=100, keep_lines=20)
-    print(message)  # Auch in Konsole ausgeben
-
-
-write_to_log("Flask-App gestartet")
+skript.write_to_log("Flask-App gestartet")
 
 @app.route("/")
 def home():
-    return render_template("index.html", user="Besucher")
+    # Prüfen ob der Benutzer verifiziert ist
+    if session.get('verified'):
+        container_name = os.getenv("Name_of_your_container")
+        return render_template("index.html", container_name=container_name, user="Verifizierter Benutzer", verified=True)
+    else:
+        return render_template("login.html")
+    
+@app.route("/login", methods=["POST"])
+def login():
+    password = request.form.get("password")
+    
+    if verify_password(password):
+        session['verified'] = True
+        return jsonify({"success": True, "message": "Erfolgreich verifiziert!"})
+    else:
+        return jsonify({"success": False, "message": "Falsches Passwort!"})
+    
+@app.route("/logout")
+def logout():
+    session.pop('verified', None)
+    return jsonify({"success": True, "message": "Erfolgreich abgemeldet!"})
 
 @app.route("/start-m-server", methods=["POST"])
 def start_m_server():
-    write_to_log("M-Server starten gedrückt")
+    skript.write_to_log("M-Server starten gedrückt")
     skript.start_m_server()
     server_status()
     return "✅ In Arbeit(Start) Warte!"
 
 @app.route("/stop-m-server", methods=["POST"])
 def stop_m_server():
-    write_to_log("M-Server stoppen gedrückt")
+    skript.write_to_log("M-Server stoppen gedrückt")
     skript.stop_m_server()
     server_status()
     return "✅ In Arbeit(Stop) Warte!"
@@ -84,6 +81,37 @@ def get_logs():
             logs = f.read().splitlines()
     
     return jsonify({"logs": logs})
+
+    
+@app.route('/docker-info')
+def docker_info():
+    """Gibt Roh-Docker-Informationen zurück"""
+    try:
+        import docker
+        client = docker.from_env()
+        container_name = os.getenv("Name_of_your_container")
+        
+        if not container_name:
+            return jsonify({"error": "Container Name nicht gesetzt"})
+        
+        try:
+            container = client.containers.get(container_name)
+            container.reload()
+            
+            return jsonify({
+                "container_name": container_name,
+                "status": container.status,  # Der echte Docker-Status
+                "state": container.attrs.get('State', {}),
+                "id": container.id,
+                "image": container.image.tags if container.image else "unknown"
+            })
+        except docker.errors.NotFound:
+            return jsonify({"error": f"Container {container_name} nicht gefunden"})
+        except docker.errors.APIError as e:
+            return jsonify({"error": f"Docker API Error: {str(e)}"})
+            
+    except Exception as e:
+        return jsonify({"error": f"Unexpected error: {str(e)}"})
 
 if __name__ == "__main__":
     app.run(debug=True)

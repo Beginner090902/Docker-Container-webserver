@@ -52,15 +52,6 @@
             border: 1px solid #d6e9c6;
         }
         
-        .status-container {
-            text-align: center;
-            margin: 20px 0;
-            padding: 15px;
-            border-radius: 5px;
-            background-color: white;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
         .status-indicator {
             display: inline-block;
             width: 15px;
@@ -68,13 +59,85 @@
             border-radius: 50%;
             margin-right: 10px;
         }
-        
+
         .status-on {
-            background-color: #4CAF50;
+            background-color: #4CAF50; /* Grün - Online */
         }
-        
+
         .status-off {
-            background-color: #f44336;
+            background-color: #f44336; /* Rot - Offline */
+        }
+
+        .status-starting {
+            background-color: #ff9800; /* Orange - Starting */
+            animation: pulse 2s infinite;
+        }
+
+        .status-restarting {
+            background-color: #2196F3; /* Blau - Restarting */
+            animation: blink 1s infinite;
+        }
+
+        .status-unhealthy {
+            background-color: #ffeb3b; /* Gelb - Unhealthy */
+            animation: pulse 1.5s infinite;
+        }
+
+        .status-unknown {
+            background-color: #9e9e9e; /* Grau - Unknown */
+        }
+
+        .status-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .status-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .status-indicator {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .status-text {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #fff;
+            margin: 0;
+            text-shadow: 
+                1px 1px 0 #fff,   /* Weißer Schatten für Umrandung */
+                -1px 1px 0 #fff,
+                1px -1px 0 #fff,
+                -1px -1px 0 #fff,
+                0px 1px 0 #fff,
+                0px -1px 0 #fff,
+                1px 0px 0 #fff,
+                -1px 0px 0 #fff,
+                2px 2px 4px rgba(0, 0, 0, 0.5); 
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
         }
         
         .log-container {
@@ -118,8 +181,25 @@
     </style>
 </head>
 <body>
-    <h1>Willkommen beim M-Server</h1>
-    
+    <div style="position: absolute; top: 10px; right: 10px;">
+    <button onclick="logout()" style="background-color: #ff4444;">Abmelden</button>
+</div>
+
+<script>
+// Füge diese Funktion zu deinem JavaScript hinzu
+function logout() {
+    fetch('/logout')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                window.location.href = '/';
+            }
+        });
+}
+</script>
+
+    <h1>Willkommen beim M-Server ({{ container_name }})</h1>
+
     <!-- Status-Anzeige -->
     <div class="status-container">
         <h3>Server Status: 
@@ -171,18 +251,35 @@
                     const indicator = document.getElementById('status-indicator');
                     const statusText = document.getElementById('status-text');
                     
-                    if (data.status === 'online') {
+                    const status = data.status || 'unknown';
+                    console.log("Server Status:", status);
+                    
+                    // Status mapping mit starting
+                    if (status === 'running') {
                         indicator.className = 'status-indicator status-on';
                         statusText.textContent = 'ONLINE';
-                    } else {
+                    } else if (status === 'starting') {
+                        indicator.className = 'status-indicator status-starting';
+                        statusText.textContent = 'STARTING';
+                    } else if (status === 'restarting') {
+                        indicator.className = 'status-indicator status-restarting';
+                        statusText.textContent = 'RESTARTING';
+                    } else if (status === 'exited' || status === 'stopped') {
                         indicator.className = 'status-indicator status-off';
                         statusText.textContent = 'OFFLINE';
+                    } else if (status === 'unhealthy') {
+                        indicator.className = 'status-indicator status-unhealthy';
+                        statusText.textContent = 'UNHEALTHY';
+                    } else {
+                        indicator.className = 'status-indicator status-unknown';
+                        statusText.textContent = status.toUpperCase();
                     }
                 })
                 .catch(error => {
-                    console.error('Fehler beim Abrufen des Status:', error);
+                    console.error('Fehler beim Status abrufen:', error);
                 });
-        }
+            }
+        
         
         // Befehl an den Server senden
         function sendCommand(action) {
@@ -253,9 +350,9 @@
             updateServerStatus();
             loadLogs();
         });
-        
-        // Status alle 10 Sekunden aktualisieren
-        setInterval(updateServerStatus, 10000);
+
+        // Status alle 4 Sekunden aktualisieren
+        setInterval(updateServerStatus, 4000);
     </script>
 </body>
 </html>
