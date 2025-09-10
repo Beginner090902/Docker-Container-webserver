@@ -3,10 +3,26 @@ import sys
 import os
 sys.path.append("/scripts")
 import meinskript as skript
+from datetime import datetime
+from apscheduler.schedulers.background import BackgroundScheduler
 
 
 app = Flask(__name__)
 app.secret_key = 'dein_geheimer_schluessel'
+
+def auto_container_stop():
+    if os.getenv("Auto_Stop") == "True":
+        current_time = datetime.now().strftime("%H:%M")
+        if current_time == os.getenv("Auto_Stop_Time"):
+            skript.stop_m_server()
+            skript.write_to_log(f"Automatischer Stopp des Containers um {current_time}")
+    else:
+        pass
+    
+
+scheduler = BackgroundScheduler()
+scheduler.add_job(auto_container_stop, "interval", seconds=50)
+scheduler.start()
 
 # Verifizierungs-Funktion
 def verify_password(password):

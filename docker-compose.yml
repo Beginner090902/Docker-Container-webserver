@@ -18,4 +18,6 @@ services:
       - PYTHONPATH=/scripts  # Füge zum Python Path hinzu
       - PASSWORD=${PASSWORD}
       - Name_of_your_container=${Name_of_your_container}
+      - Auto_Stop=${Auto_Stop}
+      - Auto_Stop_Time=${Auto_Stop_Time}
     command: flask run --host=0.0.0.0 --port=5000
