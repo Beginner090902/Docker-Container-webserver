@@ -1,12 +1,10 @@
+import app as appfunctions
+
 def start_m_server():
-    with open("/scripts/output.log", "a") as f:
-        f.write("✅ M-Server gestartet!\n")
-        print("M-Server starten ausgeführt")
+    appfunctions.write_to_log("M-Server starten ausgeführt")
 
 def stop_m_server():
-    with open("/scripts/output.log", "a") as f:
-        f.write("✅ M-Server gestoppt!\n")
-        print("M-Server stoppen ausgeführt")
+    appfunctions.write_to_log("M-Server stoppen ausgeführt")
 
 def check_server_status():
     return "running"  # Beispielstatus, passe dies an deine Logik an
