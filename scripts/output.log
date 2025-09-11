@@ -214,3 +214,101 @@
 21:28:59 10.09.2025 - Flask-App gestartet
 21:29:03 10.09.2025 - M-Server starten gedrückt
 21:29:03 10.09.2025 - M-Server starten ausgeführt
+12:39:20 11.09.2025 - Flask-App gestartet
+12:39:28 11.09.2025 - M-Server starten gedrückt
+12:39:28 11.09.2025 - M-Server starten ausgeführt
+12:40:00 11.09.2025 - Flask-App gestartet
+12:41:41 11.09.2025 - M-Server stoppen ausgeführt
+12:41:41 11.09.2025 - Automatischer Stopp des Containers um 12:41
+13:22:15 11.09.2025 - Web-Server gestartet
+13:24:38 11.09.2025 - Web-Server gestartet
+14:38:18 11.09.2025 - Web-Server gestartet
+14:39:08 11.09.2025 - FEHLER beim Status abfragen: name 'container' is not defined
+14:39:58 11.09.2025 - FEHLER beim Status abfragen: name 'container' is not defined
+14:41:14 11.09.2025 - Web-Server gestartet
+14:45:41 11.09.2025 - Web-Server gestartet
+14:46:31 11.09.2025 - FEHLER beim Status abfragen: name 'container' is not defined
+14:46:53 11.09.2025 - Web-Server gestartet
+14:48:49 11.09.2025 - Web-Server gestartet
+14:48:54 11.09.2025 - FEHLER beim Status abfragen: name 'container' is not defined
+14:48:58 11.09.2025 - FEHLER beim Status abfragen: name 'container' is not defined
+14:49:02 11.09.2025 - FEHLER beim Status abfragen: name 'container' is not defined
+14:49:03 11.09.2025 - M-Server starten gedrückt
+14:49:03 11.09.2025 - FEHLER beim Status abfragen: name 'container' is not defined
+14:49:06 11.09.2025 - FEHLER beim Status abfragen: name 'container' is not defined
+14:49:10 11.09.2025 - FEHLER beim Status abfragen: name 'container' is not defined
+14:49:14 11.09.2025 - FEHLER beim Status abfragen: name 'container' is not defined
+14:49:15 11.09.2025 - M-Server starten gedrückt
+14:49:15 11.09.2025 - FEHLER beim Status abfragen: name 'container' is not defined
+14:49:18 11.09.2025 - FEHLER beim Status abfragen: name 'container' is not defined
+14:49:20 11.09.2025 - FEHLER beim Status abfragen: name 'container' is not defined
+14:49:21 11.09.2025 - M-Server starten gedrückt
+14:49:21 11.09.2025 - FEHLER beim Status abfragen: name 'container' is not defined
+14:49:24 11.09.2025 - FEHLER beim Status abfragen: name 'container' is not defined
+14:49:27 11.09.2025 - FEHLER beim Status abfragen: name 'container' is not defined
+14:49:31 11.09.2025 - FEHLER beim Status abfragen: name 'container' is not defined
+14:49:39 11.09.2025 - FEHLER beim Status abfragen: name 'container' is not defined
+14:50:29 11.09.2025 - FEHLER beim Status abfragen: name 'container' is not defined
+14:51:19 11.09.2025 - FEHLER beim Status abfragen: name 'container' is not defined
+14:52:09 11.09.2025 - FEHLER beim Status abfragen: name 'container' is not defined
+14:52:59 11.09.2025 - FEHLER beim Status abfragen: name 'container' is not defined
+14:53:49 11.09.2025 - FEHLER beim Status abfragen: name 'container' is not defined
+14:54:39 11.09.2025 - FEHLER beim Status abfragen: name 'container' is not defined
+14:55:29 11.09.2025 - FEHLER beim Status abfragen: name 'container' is not defined
+14:56:19 11.09.2025 - FEHLER beim Status abfragen: name 'container' is not defined
+14:57:09 11.09.2025 - FEHLER beim Status abfragen: name 'container' is not defined
+14:57:59 11.09.2025 - FEHLER beim Status abfragen: name 'container' is not defined
+14:58:49 11.09.2025 - FEHLER beim Status abfragen: name 'container' is not defined
+14:59:39 11.09.2025 - FEHLER beim Status abfragen: name 'container' is not defined
+15:00:29 11.09.2025 - FEHLER beim Status abfragen: name 'container' is not defined
+15:01:19 11.09.2025 - FEHLER beim Status abfragen: name 'container' is not defined
+15:16:48 11.09.2025 - Web-Server gestartet
+15:18:48 11.09.2025 - Web-Server gestartet
+15:20:01 11.09.2025 - Web-Server gestartet
+15:27:58 11.09.2025 - Web-Server gestartet
+15:28:16 11.09.2025 - test2 starten ausgeführt
+15:28:20 11.09.2025 - test2 stoppen ausgeführt
+15:28:24 11.09.2025 - test2 stoppen ausgeführt
+15:28:30 11.09.2025 - test2 starten ausgeführt
+15:28:33 11.09.2025 - test2 stoppen ausgeführt
+15:29:01 11.09.2025 - test2 starten ausgeführt
+15:29:03 11.09.2025 - test2 stoppen ausgeführt
+15:30:29 11.09.2025 - test2 starten ausgeführt
+15:31:19 11.09.2025 - test2 stoppen ausgeführt
+15:35:43 11.09.2025 - Web-Server gestartet
+15:36:18 11.09.2025 - test2 starten ausgeführt
+15:36:29 11.09.2025 - test2 stoppen ausgeführt
+15:36:32 11.09.2025 - test2 starten ausgeführt
+15:36:45 11.09.2025 - test2 stoppen ausgeführt
+15:37:05 11.09.2025 - test2 starten ausgeführt
+15:46:16 11.09.2025 - Web-Server gestartet
+15:46:39 11.09.2025 - test2 stoppen ausgeführt
+15:46:51 11.09.2025 - test2 starten ausgeführt
+15:47:00 11.09.2025 - test2 stoppen ausgeführt
+15:47:13 11.09.2025 - test2 starten ausgeführt
+15:47:35 11.09.2025 - test2 stoppen ausgeführt
+15:49:50 11.09.2025 - Web-Server gestartet
+15:49:59 11.09.2025 - test2 starten ausgeführt
+15:52:01 11.09.2025 - test2 stoppen ausgeführt
+15:56:52 11.09.2025 - Web-Server gestartet
+15:57:05 11.09.2025 - test2 starten ausgeführt
+15:57:10 11.09.2025 - test2 stoppen ausgeführt
+16:07:45 11.09.2025 - Web-Server gestartet
+16:18:36 11.09.2025 - Web-Server gestartet
+16:19:54 11.09.2025 - Web-Server gestartet
+16:23:51 11.09.2025 - Web-Server gestartet
+16:28:18 11.09.2025 - Web-Server gestartet
+16:38:34 11.09.2025 - Web-Server gestartet
+16:43:46 11.09.2025 - Web-Server gestartet
+16:43:48 11.09.2025 - Web-Server gestartet
+16:43:49 11.09.2025 - Web-Server gestartet
+16:43:50 11.09.2025 - Web-Server gestartet
+16:43:51 11.09.2025 - Web-Server gestartet
+16:43:54 11.09.2025 - Web-Server gestartet
+16:44:47 11.09.2025 - Web-Server gestartet
+16:46:25 11.09.2025 - Web-Server gestartet
+16:49:30 11.09.2025 - Web-Server gestartet
+16:57:23 11.09.2025 - Web-Server gestartet
+17:05:51 11.09.2025 - Web-Server gestartet
+17:09:56 11.09.2025 - Web-Server gestartet
+17:12:52 11.09.2025 - Web-Server gestartet
